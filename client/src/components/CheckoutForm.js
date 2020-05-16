@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useForm } from '../hooks/useForm'; 
 
 const initialValue = {
   firstName: "",
@@ -15,11 +16,20 @@ const initialValue = {
 
 const CheckoutForm = (props) => {
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
-  const [values, setValues] = useState(initialValue);
+  // const [values, setValues] = useState(initialValue);
 
-  const handleChanges = (e) => {
+  /* const handleChanges = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
-  };
+  }; */
+
+  const [values, handleChanges] = useForm({
+    firstName: '',
+    lastName: '',
+    address: '',
+    city: '',
+    state: '',
+    zip: '',
+  })
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -77,11 +87,11 @@ const CheckoutForm = (props) => {
           <p>Your new green friends will be shipped to:</p>
           <br />
           <br />
-          <p>
+          <p data-testid='fullName'>
             {values.firstName} {values.lastName}
           </p>
-          <p>{values.address}</p>
-          <p>
+          <p data-testid='address'>{values.address}</p>
+          <p data-testid='secondAddress'>
             {values.city}, {values.state} {values.zip}
           </p>
         </div>
